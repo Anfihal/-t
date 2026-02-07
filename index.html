@@ -35,33 +35,37 @@
     <hana-viewer url="https://prod.spline.design/Hgdw8D9MIkTPD5Hu-7rQ/scene.hanacode"></hana-viewer>
   </div>
 
-  <!-- СКРЫТИЕ ВОТЕРМАРКИ ЧЕРЕЗ SHADOW DOM -->
+  <!-- МГНОВЕННОЕ СКРЫТИЕ ВОТЕРМАРКИ -->
   <script>
-    function hideWatermark() {
-      const viewer = document.querySelector('hana-viewer');
-      if (!viewer) return;
-      
-      const checkShadow = setInterval(() => {
+    (function() {
+      const hideWatermark = () => {
+        const viewer = document.querySelector('hana-viewer');
+        if (!viewer) return false;
+        
         const shadow = viewer.shadowRoot;
         if (shadow) {
-          clearInterval(checkShadow);
-          
-          const style = document.createElement('style');
-          style.textContent = `
-            #logo {
-              display: none !important;
-            }
-          `;
-          shadow.appendChild(style);
-          
-          console.log('✅ Вотермарка скрыта!');
+          const logo = shadow.getElementById('logo');
+          if (logo) {
+            logo.style.display = 'none';
+            logo.remove();
+            console.log('✅ Вотермарка скрыта!');
+            return true;
+          }
         }
-      }, 100);
-    }
+        return false;
+      };
 
-    window.addEventListener('load', () => {
-      setTimeout(hideWatermark, 1000);
-    });
+      // Пытаемся скрыть сразу
+      let attempts = 0;
+      const maxAttempts = 50; // Максимум 2.5 секунды (50 * 50мс)
+      
+      const interval = setInterval(() => {
+        attempts++;
+        if (hideWatermark() || attempts >= maxAttempts) {
+          clearInterval(interval);
+        }
+      }, 50); // Проверяем каждые 50мс
+    })();
   </script>
 </body>
 </html>
