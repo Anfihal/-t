@@ -26,19 +26,8 @@
       width: 100%;
       height: 100%;
       display: block;
-      /* Обрезаем только чёрные полосы — оставляем белую зону целиком */
-      clip-path: inset(25% 0 25% 0); /* ← регулируй под свою сцену */
-      transform: scale(1); /* предотвращает "дрожание" при рендеринге */
     }
 
-    /* Для мобильных — меньше обрезки */
-    @media (max-width: 768px) {
-      hana-viewer {
-        clip-path: inset(20% 0 20% 0);
-      }
-    }
-
-    /* Если хочешь добавить тень или рамку вокруг белой области */
     .scene-wrapper {
       box-shadow: 0 0 20px rgba(0,0,0,0.05);
       border-radius: 8px;
@@ -48,7 +37,6 @@
 </head>
 <body>
   <div class="scene-container">
-    <!-- Исправлены лишние пробелы в URL -->
     <script type="module" src="https://cdn.spline.design/@splinetool/hana-viewer@1.2.36/hana-viewer.js"></script>
     <hana-viewer url="https://prod.spline.design/Hgdw8D9MIkTPD5Hu-7rQ/scene.hanacode"></hana-viewer>
   </div>
