@@ -27,11 +27,6 @@
       height: 100%;
       display: block;
     }
-
-    /* === СКРЫТИЕ ВОТЕРМАРКИ === */
-    #logo {
-      display: none !important;
-    }
   </style>
 </head>
 <body>
@@ -40,13 +35,32 @@
     <hana-viewer url="https://prod.spline.design/Hgdw8D9MIkTPD5Hu-7rQ/scene.hanacode"></hana-viewer>
   </div>
 
-  <!-- JavaScript-бэкап для гарантированного скрытия -->
+  <!-- СКРЫТИЕ ВОТЕРМАРКИ ЧЕРЕЗ SHADOW DOM -->
   <script>
-    window.addEventListener('load', function() {
-      setTimeout(() => {
-        const logo = document.querySelector('#logo');
-        if (logo) logo.remove();
-      }, 1000); // Ждём 1 секунду для загрузки сцены
+    function hideWatermark() {
+      const viewer = document.querySelector('hana-viewer');
+      if (!viewer) return;
+      
+      const checkShadow = setInterval(() => {
+        const shadow = viewer.shadowRoot;
+        if (shadow) {
+          clearInterval(checkShadow);
+          
+          const style = document.createElement('style');
+          style.textContent = `
+            #logo {
+              display: none !important;
+            }
+          `;
+          shadow.appendChild(style);
+          
+          console.log('✅ Вотермарка скрыта!');
+        }
+      }, 100);
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(hideWatermark, 1000);
     });
   </script>
 </body>
