@@ -29,8 +29,7 @@
     }
 
     /* === СКРЫТИЕ ВОТЕРМАРКИ === */
-    #logo,
-    a[id="logo"] {
+    #logo {
       display: none !important;
     }
   </style>
@@ -40,5 +39,15 @@
     <script type="module" src="https://cdn.spline.design/@splinetool/hana-viewer@1.2.36/hana-viewer.js"></script>
     <hana-viewer url="https://prod.spline.design/Hgdw8D9MIkTPD5Hu-7rQ/scene.hanacode"></hana-viewer>
   </div>
+
+  <!-- JavaScript-бэкап для гарантированного скрытия -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const logo = document.querySelector('#logo');
+        if (logo) logo.remove();
+      }, 1000); // Ждём 1 секунду для загрузки сцены
+    });
+  </script>
 </body>
 </html>
